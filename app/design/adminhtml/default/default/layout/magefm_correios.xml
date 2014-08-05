@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout>
+    <adminhtml_magefm_correios_range_index>
+        <reference name="content">
+            <block type="magefm_correios/adminhtml_range" name="magefm_correios.range" />
+        </reference>
+    </adminhtml_magefm_correios_range_index>
+    <adminhtml_magefm_correios_range_edit>
+        <reference name="content">
+            <block type="magefm_correios/adminhtml_range_edit" name="magefm_correios.range_edit" />
+        </reference>
+    </adminhtml_magefm_correios_range_edit>
+</layout>

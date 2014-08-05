@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <menu>
+        <system>
+            <children>
+                <magefm_correios translate="title" module="magefm_correios">
+                    <title>Correios</title>
+                    <sort_order>200</sort_order>
+                    <children>
+                        <range translate="title">
+                            <title>Range</title>
+                            <sort_order>20</sort_order>
+                            <action>adminhtml/magefm_correios_range/index</action>
+                        </range>
+                    </children>
+                </magefm_correios>
+            </children>
+        </system>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <magefm_correios translate="title" module="magefm_correios">
+                                <title>MageFM Correios</title>
+                                <sort_order>200</sort_order>
+                                <children>
+                                    <range translate="title">
+                                        <title>Range</title>
+                                        <sort_order>10</sort_order>
+                                    </range>
+                                </children>
+                            </magefm_correios>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>
