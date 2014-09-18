@@ -16,4 +16,6 @@ interface MageFM_Correios_Model_Method_Interface
     public function setCarrierCode($carrierCode);
 
     public function setCarrierName($carrierName);
+
+    public function roundWeight($weight);
 }

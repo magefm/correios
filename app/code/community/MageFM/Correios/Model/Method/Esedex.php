@@ -18,4 +18,17 @@ class MageFM_Correios_Model_Method_Esedex extends MageFM_Correios_Model_Method_A
         return 15;
     }
 
+    public function roundWeight($weight)
+    {
+        if ($weight > $this->getWeightLimit()) {
+            return false;
+        }
+
+        if ($weight <= 0.5) {
+            return 0.5;
+        }
+
+        return ceil($weight);
+    }
+
 }

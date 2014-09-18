@@ -18,4 +18,35 @@ class MageFM_Correios_Model_Method_Sedex extends MageFM_Correios_Model_Method_Ab
         return 30;
     }
 
+    public function roundWeight($weight)
+    {
+        if ($weight > $this->getWeightLimit()) {
+            return false;
+        }
+
+        if ($weight <= 0.3) {
+            return 0.3;
+        }
+
+        if ($weight <= 5) {
+            $full = floor($weight);
+            $part = $weight - $full;
+
+            if ($part == 0) {
+                return $full;
+            }
+
+            if ($part <= 0.5) {
+                $part = 0.5;
+            } else {
+                $full = $full + 1;
+                $part = 0;
+            }
+
+            return ($full + $part);
+        }
+
+        return ceil($weight);
+    }
+
 }

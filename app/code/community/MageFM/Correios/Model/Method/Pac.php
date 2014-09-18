@@ -18,4 +18,25 @@ class MageFM_Correios_Model_Method_Pac extends MageFM_Correios_Model_Method_Abst
         return 30;
     }
 
+    public function roundWeight($weight)
+    {
+        if ($weight > $this->getWeightLimit()) {
+            return false;
+        }
+
+        if ($weight <= 0.5) {
+            return 0.5;
+        }
+
+        if ($weight <= 1) {
+            return 1;
+        }
+
+        if ($weight <= 1.5) {
+            return 1.5;
+        }
+
+        return ceil($weight);
+    }
+
 }

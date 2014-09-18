@@ -55,6 +55,7 @@ class MageFM_Correios_Block_Adminhtml_Range_Edit_Form extends Mage_Adminhtml_Blo
             'label' => Mage::helper('magefm_correios')->__('Max Weight (kg)'),
             'name' => 'weight',
             'options' => Mage::getModel('magefm_correios/source_weight')->toKeyValueArray(),
+            'note' => Mage::helper('magefm_correios')->__('The options depend on method\'s rounding.'),
         ));
 
         $fieldset->addField('price', 'text', array(

@@ -110,6 +110,7 @@ abstract class MageFM_Correios_Model_Method_Abstract
         $result->setCarrierTitle($this->getCarrierName());
         $result->setMethod($this->getCode());
         $result->setPrice($price);
+        $result->setDays($days);
 
         if ($cost !== null) {
             $result->setCost($cost);
@@ -208,6 +209,11 @@ abstract class MageFM_Correios_Model_Method_Abstract
     protected function calculatePackageRate($cepOrigin, $cep, $weight)
     {
         $weight = $this->roundWeight($weight);
+
+        if (!$weight) {
+            return false;
+        }
+
         $rate = $this->getRateFromDatabase($cepOrigin, $cep, $weight);
 
         if ($rate) {
@@ -250,15 +256,6 @@ abstract class MageFM_Correios_Model_Method_Abstract
         }
 
         return $collection->getFirstItem();
-    }
-
-    protected function roundWeight($weight)
-    {
-        if ($weight <= 0.3) {
-            return 0.3;
-        }
-
-        return ceil($weight);
     }
 
     protected function getRateFromWebservice($cepOrigin, $cep, $weight)

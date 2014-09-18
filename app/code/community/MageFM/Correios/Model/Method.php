@@ -37,7 +37,59 @@ class MageFM_Correios_Model_Method extends Mage_Shipping_Model_Carrier_Abstract
             $result->append($rateResultMethod);
         }
 
+        $this->processFreeshipping($request, $result);
+
         return $result;
+    }
+
+    protected function processFreeshipping(Mage_Shipping_Model_Rate_Request $request, Mage_Shipping_Model_Rate_Result $result)
+    {
+        if ($request->getFreeMethodWeight() == $request->getPackageWeight() || !$request->hasFreeMethodWeight()) {
+            return;
+        }
+
+        $freeOnly = Mage::getStoreConfigFlag('carriers/magefm_correios/freeshipping_only');
+        $freeMode = Mage::getStoreConfig('carriers/magefm_correios/freeshipping_mode');
+        $freeRate = null;
+
+        switch ($freeMode) {
+            case 'cheapest':
+                $freeRate = $result->getCheapestRate();
+                break;
+            case 'fastest':
+                $fastest = null;
+
+                foreach ($result->getAllRates() as $rate) {
+                    if (is_null($fastest) || $rate->getDays() < $fastest->getDays() || ($rate->getDays() == $fastest->getDays() && $rate->getCost() < $fastest->getCost())) {
+                        $fastest = $rate;
+                    }
+                }
+
+                $freeRate = $fastest;
+                break;
+            case 'specific':
+                $freeMethod = Mage::getStoreConfig('carriers/magefm_correios/freeshipping_specific');
+
+                foreach ($result->getAllRates() as $rate) {
+                    if ($rate->getMethod() == $freeMethod) {
+                        $freeRate = $rate;
+                        break;
+                    }
+                }
+                break;
+            default:
+                return;
+        }
+
+        if (is_null($freeRate)) {
+            return;
+        }
+
+        $freeRate->setPrice(0);
+
+        if ($freeOnly) {
+            $result->reset()->append($freeRate);
+        }
     }
 
     public function isTrackingAvailable()
